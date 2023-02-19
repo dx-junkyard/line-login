@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dxjunkyard.linelogin.repository.dao.mapper.UserMapper">
+    <select id="getUserProperty" resultType="com.dxjunkyard.linelogin.domain.resource.UserProperty">
+        select
+            Users.user_id,
+            Users.name,
+            Users.email
+        from
+            Users
+        where
+            user_id = Users.user_id
+    </select>
+    <insert id="registerUserProperty">
+        insert into Users(user_id,name,email,password,status)
+        values(
+               #{user_id}
+               ,#{name}
+               ,#{email}
+               ,hex(aes_encrypt(SHA2(#{password}, 512),#{encrypt_key}))
+               ,#{status}
+              )
+    </insert>
+    <update id="updateUserProperty">
+        update Users set
+            name = #{name}
+            ,email = #{email}
+            ,password = hex(aes_encrypt(SHA2(#{password}, 512),#{encrypt_key}))
+            ,status = #{status}
+        where user_id = #{user_id}
+    </update>
+    <select id="login" resultType="String">
+        select
+             user_id
+        from
+             Users
+        where
+              Users.email = #{email}
+          and
+              Users.status = 1
+          and
+              SHA2(#{password}, 512) = convert(aes_decrypt(unhex(password),#{encrypt_key}) using utf8);
+    </select>
+
+</mapper>

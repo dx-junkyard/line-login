@@ -1,0 +1,29 @@
+.registration_form {
+  margin: 10px auto;
+  padding: 50px;
+  width: 600px;
+  background: white;
+}
+
+.matching_form {
+  margin: 10px auto;
+  padding: 50px;
+  width: 1200px;
+  background: white;
+}
+
+.card_list {
+  margin: 10px auto;
+  padding: 50px;
+  width:   600px;
+  background: white;
+  overflow: scroll;
+}
+
+.search_form {
+  margin: 10px auto;
+  padding: 50px;
+  background: white;
+  text-align: center;
+}
+
